@@ -10,6 +10,8 @@ from distutils import log
 
 log.set_verbosity(log.DEBUG)
 
+versionStr = os.environ["CHDB_VERSION"]
+
 def get_python_ext_suffix():
     internal_ext_suffix = sysconfig.get_config_var('EXT_SUFFIX')
     p = subprocess.run(['python3', '-c', "import sysconfig; print(sysconfig.get_config_var('EXT_SUFFIX'))"], capture_output=True, text=True)
@@ -30,33 +32,6 @@ def get_python_ext_suffix():
 # get the path of the current file
 script_dir = os.path.dirname(os.path.abspath(__file__))
 libdir = os.path.join(script_dir, "chdb")
-
-def get_latest_git_tag(minor_ver_auto=False):
-    try:
-        completed_process = subprocess.run(['git', 'describe', '--tags', '--abbrev=0', '--match', 'v*'], capture_output=True, text=True)
-        if completed_process.returncode != 0:
-            print(completed_process.stdout)
-            print(completed_process.stderr)
-            # get git version
-            raise RuntimeError("Failed to get git tag")
-        output = completed_process.stdout.strip()
-        #strip the v from the tag
-        output = output[1:]
-        parts = output.split('.')
-        if len(parts) == 3:
-            if minor_ver_auto:
-                completed_process = subprocess.run(['git', 'rev-list', '--count', f"v{output}..HEAD"], capture_output=True, text=True)
-                if completed_process.returncode != 0:
-                    print(completed_process.stdout)
-                    print(completed_process.stderr)
-                    raise RuntimeError("Failed to get git rev-list")
-                n = completed_process.stdout.strip()
-                parts[2] = int(parts[2]) + int(n)
-            return f"{parts[0]}.{parts[1]}.{parts[2]}"
-    except Exception as e:
-        print("Failed to get git tag. Error: ")
-        print(e)
-        raise
 
 # replace the version in chdb/__init__.py, which is `chdb_version = ('0', '1', '0')` by default
 # regex replace the version string `chdb_version = ('0', '1', '0')` with version parts
@@ -172,7 +147,6 @@ if __name__ == "__main__":
             ),
         ]
         # fix the version in chdb/__init__.py
-        versionStr = get_latest_git_tag()
         fix_version_init(versionStr)
         
         # scan the chdb directory and add all the .py files to the package
