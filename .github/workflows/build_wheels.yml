@@ -3,6 +3,9 @@ name: Build x86
 on:
   workflow_dispatch:
     inputs:
+      version:
+        description: 'Version'
+        required: true
   release:
     types: [created]
   pull_request:
@@ -86,6 +89,7 @@ jobs:
           python3 -m pip install pybind11 setuptools
           export CC=/usr/bin/clang
           export CXX=/usr/bin/clang++
+          export CHDB_VERSION="${{ inputs.version }}"
           bash ./chdb/build.sh
           python3 -m pip install pandas pyarrow
           bash -x ./chdb/test_smoke.sh
