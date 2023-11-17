@@ -11,7 +11,7 @@ on:
 jobs:
   build_wheels_linux:
     name: ${{ matrix.os }} py${{ matrix.python-version }}
-    runs-on: [self-hosted, type-ccx43, "image-${{ matrix.os }}"]
+    runs-on: [self-hosted, in-ash, type-ccx43, "image-x86-system-${{ matrix.os }}"]
     strategy:
       fail-fast: false
       matrix:
