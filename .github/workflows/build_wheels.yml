@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [self-hosted type-ccx43 image-ubuntu-20.04]
+        os: [self-hosted, type-ccx43, image-ubuntu-20.04]
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
         # python-version: [ "3.7" ]
     env:
