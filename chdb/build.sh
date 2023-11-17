@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-
+CHDB_VERSION=${CHDB_VERSION:-0.1}
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 . ${DIR}/vars.sh
