@@ -38,7 +38,7 @@ jobs:
           sudo ./llvm.sh 17
           which clang++-17
           clang++-17 --version
-          sudo apt-get install -y make cmake ccache ninja-build yasm gawk wget
+          sudo apt-get install -y make cmake ccache ninja-build yasm gawk wget file
           ccache -s
       - name: Update git
         run: |
