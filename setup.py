@@ -10,7 +10,6 @@ from distutils import log
 
 log.set_verbosity(log.DEBUG)
 
-versionStr = os.environ["CHDB_VERSION"]
 
 def get_python_ext_suffix():
     internal_ext_suffix = sysconfig.get_config_var('EXT_SUFFIX')
@@ -147,6 +146,7 @@ if __name__ == "__main__":
             ),
         ]
         # fix the version in chdb/__init__.py
+        versionStr = os.environ["CHDB_VERSION"]
         fix_version_init(versionStr)
         
         # scan the chdb directory and add all the .py files to the package
