@@ -105,6 +105,7 @@ jobs:
         run: |
           export CC=/usr/bin/clang
           export CXX=/usr/bin/clang++
+          export CHDB_VERSION="${{ inputs.version }}"
           make wheel
       - name: Install patchelf from github
         run: |
